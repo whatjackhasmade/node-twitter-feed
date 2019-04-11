@@ -11,6 +11,17 @@ const client = new Twitter({
 	access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
+const allowCrossDomain = (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Content-Type, Authorization, Content-Length, X-Requested-With"
+	);
+};
+
+app.use(allowCrossDomain);
+
 app.get("/", (req, res) => {
 	client.get("statuses/user_timeline", (error, tweets, response) => {
 		if (error) console.error(error);
